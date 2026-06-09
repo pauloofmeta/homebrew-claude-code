@@ -10,8 +10,12 @@ os mesmos binários com os mesmos checksums SHA256.
 
 ```bash
 brew tap pauloofmeta/claude-code
-brew install --cask claude-code
+brew install --cask pauloofmeta/claude-code/claude-code
 ```
+
+> Use sempre o nome **completamente qualificado** (`pauloofmeta/claude-code/claude-code`).
+> Sem isso, o Homebrew pode encontrar o cask oficial (`homebrew/cask`) primeiro e usar a URL
+> bloqueada `downloads.claude.ai`.
 
 ## Atualização manual do cask
 
