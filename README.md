@@ -9,7 +9,7 @@ os mesmos binários com os mesmos checksums SHA256.
 ## Instalação
 
 ```bash
-brew tap paulohenriquesousadasilva/claude-code
+brew tap pauloofmeta/claude-code
 brew install --cask claude-code
 ```
 
