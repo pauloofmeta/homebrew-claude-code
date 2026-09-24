@@ -1,0 +1,41 @@
+name: bump-cask
+
+on:
+  schedule:
+    - cron: "0 12 * * *" # daily 12:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump-cask
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update cask
+        run: bash update_cask.sh
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet Casks/claude-code.rb; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit & push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          VERSION=$(grep 'version "' Casks/claude-code.rb | head -1 | sed 's/.*version "\(.*\)".*/\1/')
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/claude-code.rb
+          git commit -m "chore: bump claude-code to ${VERSION}"
+          git push

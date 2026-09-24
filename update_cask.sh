@@ -21,13 +21,23 @@ X64=$(echo "${MANIFEST}"    | python3 -c "import sys,json; d=json.load(sys.stdin
 LARM=$(echo "${MANIFEST}"   | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['platforms']['linux-arm64']['checksum'])")
 LX64=$(echo "${MANIFEST}"   | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['platforms']['linux-x64']['checksum'])")
 
-sed -i "" \
-  -e "s/version \"[0-9.]*\"/version \"${VERSION}\"/" \
-  -e "s/arm:          \"[a-f0-9]*\"/arm:          \"${ARM64}\"/" \
-  -e "s/x86_64:       \"[a-f0-9]*\"/x86_64:       \"${X64}\"/" \
-  -e "s/arm64_linux:  \"[a-f0-9]*\"/arm64_linux:  \"${LARM}\"/" \
-  -e "s/x86_64_linux: \"[a-f0-9]*\"/x86_64_linux: \"${LX64}\"/" \
-  "${CASK_FILE}"
+if [[ "$(uname)" == "Darwin" ]]; then
+  sed -i "" \
+    -e "s/version \"[0-9.]*\"/version \"${VERSION}\"/" \
+    -e "s/arm:          \"[a-f0-9]*\"/arm:          \"${ARM64}\"/" \
+    -e "s/x86_64:       \"[a-f0-9]*\"/x86_64:       \"${X64}\"/" \
+    -e "s/arm64_linux:  \"[a-f0-9]*\"/arm64_linux:  \"${LARM}\"/" \
+    -e "s/x86_64_linux: \"[a-f0-9]*\"/x86_64_linux: \"${LX64}\"/" \
+    "${CASK_FILE}"
+else
+  sed -i \
+    -e "s/version \"[0-9.]*\"/version \"${VERSION}\"/" \
+    -e "s/arm:          \"[a-f0-9]*\"/arm:          \"${ARM64}\"/" \
+    -e "s/x86_64:       \"[a-f0-9]*\"/x86_64:       \"${X64}\"/" \
+    -e "s/arm64_linux:  \"[a-f0-9]*\"/arm64_linux:  \"${LARM}\"/" \
+    -e "s/x86_64_linux: \"[a-f0-9]*\"/x86_64_linux: \"${LX64}\"/" \
+    "${CASK_FILE}"
+fi
 
 echo "Atualizado de ${CURRENT} para ${VERSION}"
 echo "SHA256 darwin-arm64:  ${ARM64}"
