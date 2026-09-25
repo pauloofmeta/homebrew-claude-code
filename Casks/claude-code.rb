@@ -8,9 +8,7 @@ cask "claude-code" do
          arm64_linux:  "6764ffc39e9fed425a493ff61ea28506d1ba83996ce81a48d1177dbb393419c9",
          x86_64_linux: "3afe8535c0cc33f0e24f7b25dab7a1727b8b592196f8496a8bc302ba2161eed3"
 
-  url "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/#{version}/#{os}-#{arch}/claude",
-      verified: "storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/"
-
+  url "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/#{version}/#{os}-#{arch}/claude"
   name "Claude Code"
   desc "Terminal-based AI coding assistant"
   homepage "https://claude.com/product/claude-code"
